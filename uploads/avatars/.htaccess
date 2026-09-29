@@ -1,0 +1,18 @@
+# Security Control: Prevent PHP / Script Execution in Uploads Directory
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|phps|phar|inc|sh|pl|cgi|exe|py|rb|asp|aspx|js)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Enforce image handling as static file
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+Options -Indexes -ExecCGI

@@ -1,0 +1,48 @@
+services:
+  web:
+    build: .
+    container_name: aol_secprog_web
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: aol_secprog
+      DB_USER: secprog_user
+      DB_PASS: secprog_pass123
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: aol_secprog_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_123
+      MYSQL_DATABASE: aol_secprog
+      MYSQL_USER: secprog_user
+      MYSQL_PASSWORD: secprog_pass123
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: aol_secprog_pma
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    depends_on:
+      - db
+
+volumes:
+  db_data:

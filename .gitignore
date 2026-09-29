@@ -1,0 +1,24 @@
+# Composer / Vendor
+/vendor/
+
+# Environment files
+.env
+*.env.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Runtime uploads (keep folder, ignore uploaded images)
+/uploads/avatars/*
+!/uploads/avatars/.gitkeep
+!/uploads/avatars/.htaccess
+
+# Docker data files if mapped locally
+*.log
